@@ -7,9 +7,13 @@
 
 ( function( $ ) {
 
+	function getElementIdentifier(el) {
+			return '[id=' + el.attr( "id" ) + '][name=' + el.attr( "name" ) + ']';
+	}
+
 	$.fn.sisyphus = function( options ) {
 		var identifier = $.map( this, function( obj, i ) {
-			return $( obj ).attr( "id" ) + $( obj ).attr( "name" )
+			return getElementIdentifier( $( obj ) );
 		}).join();
 
 		var sisyphus = Sisyphus.getInstance( identifier );
@@ -221,14 +225,14 @@
 					}
 
 					self.targets.each( function() {
-						var targetFormIdAndName = $( this ).attr( "id" ) + $( this ).attr( "name" );
+						var targetFormIdAndName = getElementIdentifier( $( this ) );
 						self.findFieldsToProtect( $( this ) ).each( function() {
 							if ( $.inArray( this, self.options.excludeFields ) !== -1 ) {
 								// Returning non-false is the same as a continue statement in a for loop; it will skip immediately to the next iteration.
 								return true;
 							}
 							var field = $( this );
-							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + field.attr( "name" ) + self.options.customKeySuffix;
+							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier( field ) + self.options.customKeySuffix;
 							if ( field.is( ":text" ) || field.is( "textarea" ) ) {
 								if ( ! self.options.timeout ) {
 									self.bindSaveDataImmediately( field, prefix );
@@ -249,16 +253,16 @@
 				saveAllData: function() {
 					var self = this;
 					self.targets.each( function() {
-						var targetFormIdAndName = $( this ).attr( "id" ) + $( this ).attr( "name" );
+						var targetFormIdAndName = getElementIdentifier( $( this ) );
 						var multiCheckboxCache = {};
 
 						self.findFieldsToProtect( $( this) ).each( function() {
 							var field = $( this );
-							if ( $.inArray( this, self.options.excludeFields ) !== -1 || field.attr( "name" ) === undefined ) {
+							if ( $.inArray( this, self.options.excludeFields ) !== -1 || ( field.attr( "name" ) === undefined && field.attr( "id" ) === undefined ) {
 								// Returning non-false is the same as a continue statement in a for loop; it will skip immediately to the next iteration.
 								return true;
 							}
-							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + field.attr( "name" ) + self.options.customKeySuffix;
+							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier( field ) + self.options.customKeySuffix;
 							var value = field.val();
 
 							if ( field.is(":checkbox") ) {
@@ -309,7 +313,7 @@
 
 					self.targets.each( function() {
 						var target = $( this );
-						var targetFormIdAndName = $( this ).attr( "id" ) + $( this ).attr( "name" );
+						var targetFormIdAndName = getElementIdentifier( $( this ) );
 
 						self.findFieldsToProtect( target ).each( function() {
 							if ( $.inArray( this, self.options.excludeFields ) !== -1 ) {
@@ -317,7 +321,7 @@
 								return true;
 							}
 							var field = $( this );
-							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + field.attr( "name" ) + self.options.customKeySuffix;
+							var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier( field ) + self.options.customKeySuffix;
 							var resque = self.browserStorage.get( prefix );
 							if ( resque !== null ) {
 								self.restoreFieldsData( field, resque );
@@ -340,7 +344,7 @@
 				 * @return void
 				 */
 				restoreFieldsData: function( field, resque ) {
-					if ( field.attr( "name" ) === undefined ) {
+					if ( field.attr( "name" ) === undefined || field.attr( "id" ) === undefined ) {
 						return false;
 					}
 					if ( field.is( ":checkbox" ) && resque !== "false" && field.attr( "name" ).indexOf( "[" ) === -1 ) {
@@ -447,7 +451,7 @@
 					var self = this;
 					self.targets.each( function() {
 						var target = $( this );
-						var formIdAndName = target.attr( "id" ) + target.attr( "name" );
+						var formIdAndName = getElementIdentifier( target );
 						$( this ).bind( "submit reset", function() {
 							self.releaseData( formIdAndName, self.findFieldsToProtect( target ) );
 						} );
@@ -463,7 +467,7 @@
 					var self = this;
 					self.targets.each( function() {
 						var target = $( this );
-						var formIdAndName = target.attr( "id" ) + target.attr( "name" );
+						var formIdAndName = getElementIdentifier( target );
 						self.releaseData( formIdAndName, self.findFieldsToProtect( target ) );
 					} );
 				},
@@ -489,7 +493,7 @@
 							return true;
 						}
 						var field = $( this );
-						var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + field.attr( "name" ) + self.options.customKeySuffix;
+						var prefix = (self.options.locationBased ? self.href : "") + targetFormIdAndName + getElementIdentifier( field ) + self.options.customKeySuffix;
 						self.browserStorage.remove( prefix );
 						released = true;
 					} );
