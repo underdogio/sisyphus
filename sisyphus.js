@@ -258,7 +258,7 @@
 
 						self.findFieldsToProtect( $( this) ).each( function() {
 							var field = $( this );
-							if ( $.inArray( this, self.options.excludeFields ) !== -1 || ( field.attr( "name" ) === undefined && field.attr( "id" ) === undefined ) {
+							if ( $.inArray( this, self.options.excludeFields ) !== -1 || ( field.attr( "name" ) === undefined && field.attr( "id" ) === undefined ) ) {
 								// Returning non-false is the same as a continue statement in a for loop; it will skip immediately to the next iteration.
 								return true;
 							}
