@@ -345,7 +345,7 @@
 				 * @return void
 				 */
 				restoreFieldsData: function( field, resque ) {
-					if ( field.attr( "name" ) === undefined || field.attr( "id" ) === undefined ) {
+					if ( field.attr( "name" ) === undefined && field.attr( "id" ) === undefined ) {
 						return false;
 					}
 					var name = field.attr( "name" );
@@ -358,6 +358,7 @@
 							field.attr( "checked", "checked" );
 						}
 					} else if ( name === undefined || name.indexOf( "[" ) === -1 ) {
+						// If we aren't named by name (e.g. id) or we aren't in a multiple element field
 						field.val( resque );
 					} else {
 						resque = resque.split( "," );
