@@ -357,7 +357,7 @@
 						if ( field.val() === resque ) {
 							field.attr( "checked", "checked" );
 						}
-					} else if ( name !== undefined && name.indexOf( "[" ) === -1 ) {
+					} else if ( name === undefined || name.indexOf( "[" ) === -1 ) {
 						field.val( resque );
 					} else {
 						resque = resque.split( "," );
