@@ -266,15 +266,16 @@
 							var value = field.val();
 
 							if ( field.is(":checkbox") ) {
-								if ( field.attr( "name" ).indexOf( "[" ) !== -1 ) {
-									if ( multiCheckboxCache[ field.attr( "name" ) ] === true ) {
+								var name = field.attr( "name" );
+								if ( name !== undefined && name.indexOf( "[" ) !== -1 ) {
+									if ( multiCheckboxCache[ name ] === true ) {
 										return;
 									}
 									value = [];
-									$( "[name='" + field.attr( "name" ) +"']:checked" ).each( function() {
+									$( "[name='" + name +"']:checked" ).each( function() {
 										value.push( $( this ).val() );
 									} );
-									multiCheckboxCache[ field.attr( "name" ) ] = true;
+									multiCheckboxCache[ name ] = true;
 								} else {
 									value = field.is( ":checked" );
 								}
@@ -347,15 +348,16 @@
 					if ( field.attr( "name" ) === undefined || field.attr( "id" ) === undefined ) {
 						return false;
 					}
-					if ( field.is( ":checkbox" ) && resque !== "false" && field.attr( "name" ).indexOf( "[" ) === -1 ) {
+					var name = field.attr( "name" );
+					if ( field.is( ":checkbox" ) && resque !== "false" && ( name !== undefined && name.indexOf( "[" ) === -1 ) ) {
 						field.attr( "checked", "checked" );
-					} else if( field.is( ":checkbox" ) && resque === "false" && field.attr( "name" ).indexOf( "[" ) === -1 ) {
+					} else if( field.is( ":checkbox" ) && resque === "false" && ( name !== undefined && name.indexOf( "[" ) === -1 ) ) {
 						field.removeAttr( "checked" );
 					} else if ( field.is( ":radio" ) ) {
 						if ( field.val() === resque ) {
 							field.attr( "checked", "checked" );
 						}
-					} else if ( field.attr( "name" ).indexOf( "[" ) === -1 ) {
+					} else if ( name !== undefined && name.indexOf( "[" ) === -1 ) {
 						field.val( resque );
 					} else {
 						resque = resque.split( "," );
