@@ -173,12 +173,12 @@ describe("Sisyphus", function() {
 		sisyphus.restoreAllData();
 		expect( $( "textarea:first" ).val() ).toEqual( "" );
 	} );
-
+	
 });
 
 
 describe("jQuery.sisyphus", function() {
-
+	
 	beforeEach( function() {
 		loadFixtures( "fixtures.html" );
 	} );
