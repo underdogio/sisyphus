@@ -352,13 +352,13 @@
 					var name = field.attr( "name" );
 					if ( field.is( ":checkbox" ) && resque !== "false" && ( name === undefined || name.indexOf( "[" ) === -1 ) ) {
 						// If we aren't named by name (e.g. id) or we aren't in a multiple element field
-						field.attr( "checked", "checked" );
+						field.prop( "checked", true );
 					} else if( field.is( ":checkbox" ) && resque === "false" && ( name === undefined || name.indexOf( "[" ) === -1 ) ) {
 						// If we aren't named by name (e.g. id) or we aren't in a multiple element field
-						field.removeAttr( "checked" );
+						field.prop( "checked", false );
 					} else if ( field.is( ":radio" ) ) {
 						if ( field.val() === resque ) {
-							field.attr( "checked", "checked" );
+							field.prop( "checked", true );
 						}
 					} else if ( name === undefined || name.indexOf( "[" ) === -1 ) {
 						// If we aren't named by name (e.g. id) or we aren't in a multiple element field
