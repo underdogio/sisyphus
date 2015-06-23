@@ -12,7 +12,7 @@
 	}
 
 	$.fn.sisyphus = function( options ) {
-		var identifier = $.map( this, function( obj, i ) {
+		var identifier = $.map( this, function( obj ) {
 			return getElementIdentifier( $( obj ) );
 		}).join();
 
