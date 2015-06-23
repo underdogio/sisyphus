@@ -95,12 +95,13 @@
 			instantiated: [],
 			started: []
 		};
+		var CKEDITOR = window.CKEDITOR;
 
 		function init () {
 
 			return {
 				setInstanceIdentifier: function( identifier ) {
-					this.identifier = identifier
+					this.identifier = identifier;
 				},
 
 				getInstanceIdentifier: function() {
@@ -156,7 +157,7 @@
 					var self = this;
 					this.targets = this.targets || [];
 					if ( self.options.name ) {
-						this.href = self.options.name
+						this.href = self.options.name;
 					} else {
 						this.href = location.hostname + location.pathname + location.search + location.hash;
 					}
@@ -205,7 +206,7 @@
 				},
 
 				isCKEditorExists: function() {
-					return typeof CKEDITOR != "undefined";
+					return typeof CKEDITOR !== "undefined";
 				},
 
 				findFieldsToProtect: function( target ) {
@@ -287,8 +288,8 @@
 								}
 							} else {
 								if ( self.isCKEditorExists() ) {
-									var editor;
-									if ( editor = CKEDITOR.instances[ field.attr("name") ] || CKEDITOR.instances[ field.attr("id") ] ) {
+									var editor = CKEDITOR.instances[ field.attr("name") ] || CKEDITOR.instances[ field.attr("id") ];
+									if ( editor ) {
 										editor.updateElement();
 										self.saveToBrowserStorage( prefix, field.val(), false);
 									} else {
@@ -388,8 +389,8 @@
 						};
 					}
 					if ( this.isCKEditorExists() ) {
-						var editor;
-						if ( editor = CKEDITOR.instances[ field.attr("name") ] || CKEDITOR.instances[ field.attr("id") ] ) {
+						var editor = CKEDITOR.instances[ field.attr("name") ] || CKEDITOR.instances[ field.attr("id") ];
+						if ( editor ) {
 							editor.document.on( 'keyup', function() {
 								editor.updateElement();
 								self.saveToBrowserStorage( prefix, field.val() );
